@@ -1,0 +1,10 @@
+# Ignore folder for template experiments/drafts
+_templates_ignore/
+
+# macOS
+.DS_Store
+
+# Editor
+*.swp
+*.swo
+*~

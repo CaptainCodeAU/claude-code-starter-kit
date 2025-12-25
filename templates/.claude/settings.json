@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [],
+    "ask": [],
+    "deny": []
+  },
+  "hooks": {
+    "PostToolUse": [],
+    "PreToolUse": [],
+    "SessionStart": []
+  },
+  "env": {}
+}
