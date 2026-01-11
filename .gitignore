@@ -8,3 +8,37 @@ _templates_ignore/
 *.swp
 *.swo
 *~
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+ENV/
+.eggs/
+*.egg-info/
+dist/
+build/
+
+# Testing
+.coverage
+.pytest_cache/
+htmlcov/
+.mypy_cache/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Claude Code local settings (not shared)
+.claude/settings.local.json
+
+# IDE
+.idea/
+
+# Node (if accidentally created)
+node_modules/
