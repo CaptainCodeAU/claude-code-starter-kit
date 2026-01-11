@@ -1,0 +1,111 @@
+{
+	// ========================================
+	// Workspace Settings (project-specific)
+	// ========================================
+	// NOTE: Machine colors (titleBar, statusBar) are managed by direnvrc.
+	//       Do NOT add workbench.colorCustomizations here.
+
+	// ========================================
+	// Editor Settings
+	// ========================================
+	"editor.tabSize": 4,
+	"editor.indentSize": "tabSize",
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"editor.fontSize": 12,
+	"editor.suggestFontSize": 12,
+	"editor.minimap.enabled": false,
+	"editor.inlineSuggest.enabled": true,
+	"editor.bracketPairColorization.enabled": true,
+	"editor.formatOnSave": true,
+	"editor.linkedEditing": true,
+	"editor.accessibilitySupport": "off",
+
+	// ========================================
+	// Workbench and Explorer
+	// ========================================
+	"workbench.startupEditor": "none",
+	"workbench.editor.enablePreview": false,
+	"explorer.confirmDragAndDrop": false,
+
+	// ========================================
+	// Git Settings
+	// ========================================
+	"git.confirmSync": false,
+	"git.autofetch": true,
+	"gitHistory.logLevel": "Debug",
+
+	// ========================================
+	// Security
+	// ========================================
+	"security.workspace.trust.untrustedFiles": "open",
+
+	// ========================================
+	// Python Settings
+	// ========================================
+	"python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
+	"python.analysis.typeCheckingMode": "basic",
+	"python.experiments.optOutFrom": ["All"],
+	"[python]": {
+	    "editor.formatOnType": true,
+	    "editor.formatOnSave": true,
+	    "editor.codeActionsOnSave": {
+	        "source.fixAll": "explicit",
+	        "source.organizeImports": "explicit"
+	    },
+	    "editor.defaultFormatter": "charliermarsh.ruff",
+	    "editor.rulers": [80],
+	    "editor.tabCompletion": "onlySnippets",
+	    "editor.wordBasedSuggestions": "matchingDocuments"
+	},
+
+	// ========================================
+	// Ruff (Python Linter/Formatter)
+	// ========================================
+	"ruff.nativeServer": "on",
+	"ruff.logLevel": "warn",
+	"ruff.interpreter": ["${workspaceFolder}/.venv/bin/python"],
+
+	// ========================================
+	// JSON Settings
+	// ========================================
+	"[json]": {
+	    "editor.defaultFormatter": "vscode.json-language-features"
+	},
+
+	// ========================================
+	// Prettier (Formatting)
+	// ========================================
+	"prettier.printWidth": 80,
+	"prettier.tabWidth": 4,
+	"prettier.singleQuote": true,
+	"prettier.trailingComma": "all",
+	"prettier.bracketSpacing": true,
+	"prettier.useTabs": true,
+	"prettier.arrowParens": "avoid",
+	"prettier.endOfLine": "auto",
+
+	// ========================================
+	// CSS
+	// ========================================
+	"css.lint.unknownAtRules": "ignore",
+
+	// ========================================
+	// Accessibility (sounds off)
+	// ========================================
+	"accessibility.signals": {
+	    "diffLineDeleted": "off",
+	    "diffLineInserted": "off",
+	    "diffLineModified": "off",
+	    "lineHasBreakpoint": "off",
+	    "lineHasError": "off",
+	    "lineHasFoldedArea": "off",
+	    "lineHasInlineSuggestion": "off",
+	    "noInlayHints": "off",
+	    "onDebugBreak": "off",
+	    "taskCompleted": "off",
+	    "taskFailed": "off",
+	    "terminalCommandFailed": "off",
+	    "terminalQuickFix": "off"
+	}
+}
