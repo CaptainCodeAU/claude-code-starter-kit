@@ -31,11 +31,12 @@ cd ~/my-new-project && claude
 
 ## Step 2: Hooks
 
-Hooks are **smart** - they auto-detect your project type.
-
 | Hook | What It Does | Delete If... |
 |------|--------------|--------------|
-| *(Add hooks as they are configured)* | | |
+| `agent-notify.sh` | Audio + visual notification when agent finishes (macOS) | You don't want audio alerts |
+| `post-edit-format.sh` | Auto-formats files after edits (stub) | N/A - customize for your stack |
+| `pre-commit.sh` | Runs before git commits (stub) | N/A - customize for your stack |
+| `session-start.sh` | Runs when Claude Code starts (stub) | N/A - customize for your stack |
 
 ---
 
@@ -47,7 +48,8 @@ Hooks are **smart** - they auto-detect your project type.
 
 | Skill | Description | Project Types |
 |-------|-------------|---------------|
-| *(Add skills as they are created)* | | |
+| `shell-functions/` | Best practices for .zsh_*, .bashrc shell function development | Shell scripts, dotfiles |
+| `testing-practices/` | Python test isolation, venv verification, uv usage | Python projects |
 
 ### Documentation Skills
 
@@ -61,7 +63,8 @@ Hooks are **smart** - they auto-detect your project type.
 
 | Rule | Description | Delete If... |
 |------|-------------|--------------|
-| *(Add rules as they are created)* | | |
+| `function-safety.md` | Search for callers before modifying shared functions | Never - always keep |
+| `uv-commands.md` | Enforce `uv` instead of direct python/pip commands | Not using uv for Python |
 
 ---
 
@@ -77,9 +80,10 @@ Hooks are **smart** - they auto-detect your project type.
 
 | File | Purpose |
 |------|---------|
-| `post-edit-format.sh` | Auto-formats files after edits. Detects file type. |
-| `pre-commit.sh` | Runs before git commits. Detects project type. |
-| `session-start.sh` | Runs when Claude Code starts. Startup checks. |
+| `agent-notify.sh` | Audio notification (macOS `say`) + Notification Center alert when agent completes. Triggers on Stop/SubagentStop events. |
+| `post-edit-format.sh` | Auto-formats files after edits. Detects file type. (Stub) |
+| `pre-commit.sh` | Runs before git commits. Detects project type. (Stub) |
+| `session-start.sh` | Runs when Claude Code starts. Startup checks. (Stub) |
 
 ### Skills Structure
 
@@ -91,3 +95,8 @@ Each skill folder contains:
 ### Rules
 
 Rules in `rules/` are **always loaded** into context. Use sparingly - they cost tokens every session.
+
+| File | Purpose |
+|------|---------|
+| `function-safety.md` | CRITICAL: Requires searching for all callers before modifying any shared function. Prevents silent breakage. |
+| `uv-commands.md` | Enforces `uv run python` and `uv pip` instead of direct `python`/`pip` commands. Ensures correct venv.
