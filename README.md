@@ -64,19 +64,12 @@ ClaudeCode_Skills_Maker/
         ├── CLAUDE-devops.md     # DevOps template
         ├── settings.json        # Universal (rarely needs editing)
         ├── hooks/               # Smart hooks (auto-detect language)
+        │   ├── agent-notify.sh      # Audio alert when agent completes (macOS)
         │   ├── post-edit-format.sh
         │   ├── pre-commit.sh
         │   └── session-start.sh
         ├── skills/              # Project-specific (delete unused)
-        │   ├── testing-pytest/
-        │   ├── testing-jest/
-        │   ├── frontend-react/
-        │   ├── cli-typer/
-        │   ├── api-fastapi/
-        │   ├── docs-react-query/
-        │   └── ...
         └── rules/
-            └── security.md
 ```
 
 ## Key Design Decisions

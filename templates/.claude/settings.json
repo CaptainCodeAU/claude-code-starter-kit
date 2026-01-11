@@ -7,7 +7,29 @@
   "hooks": {
     "PostToolUse": [],
     "PreToolUse": [],
-    "SessionStart": []
+    "SessionStart": [],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/agent-notify.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": ".claude/hooks/agent-notify.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
   },
   "env": {}
 }
