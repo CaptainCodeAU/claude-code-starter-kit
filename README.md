@@ -27,6 +27,7 @@ Batteries-included `.claude/` templates for bootstrapping new projects with Clau
 - [Documentation Reference](#documentation-reference)
 - [Architecture Deep Dive](#architecture-deep-dive)
 - [User Context](#user-context)
+- [Project Meta-Features](#project-meta-features)
 - [Roadmap](#roadmap)
 - [License](#license)
 
@@ -186,8 +187,6 @@ claude-code-starter-kit/
 ├── README.md                      # This file (comprehensive documentation)
 ├── CLAUDE.md                      # Project instructions for Claude
 ├── DECISIONS.md                   # Decision journal (tracks choices, rejections)
-├── DOCS-UPDATE-GUIDE.md           # Guide for updating documentation
-├── DOCS-UPDATE-PROGRESS.md        # Progress tracking for doc updates
 │
 ├── _input/                        # Content staging folder
 │   └── README.md                  # Instructions for content addition
@@ -271,10 +270,19 @@ claude-code-starter-kit/
 │   ├── __init__.py
 │   └── test_main.py
 │
-├── .claude/                       # Active Claude config for this project
+├── .claude/                       # Meta-features for this repo (not templates)
 │   ├── settings.local.json
+│   ├── skills/
+│   │   └── docs-maintenance/      # Documentation maintenance skill
+│   │       ├── SKILL.md
+│   │       └── reference/
+│   │           ├── quality-standards.md
+│   │           └── docs-structure.md
 │   └── commands/
-│       └── inventory.md           # /inventory command for stock-take
+│       ├── inventory.md           # /inventory — stock-take report
+│       ├── docs-sync.md           # /docs-sync — update from official docs
+│       ├── docs-refine.md         # /docs-refine — synthesize best practices
+│       └── docs-audit.md          # /docs-audit — audit for outdated content
 │
 ├── pyproject.toml                 # Python project configuration
 ├── .envrc                         # Direnv configuration
@@ -1179,6 +1187,37 @@ Append-only log of decisions (most recent at bottom)
 **Preserve Intent:** When updating docs, planned-but-not-built features must be preserved (move to Roadmap, never delete).
 
 **Experiment with Rollback:** Sometimes multiple approaches are shortlisted. Document current approach, alternatives, and rollback points.
+
+---
+
+## Project Meta-Features
+
+The `.claude/` folder in this repo (not `templates/.claude/`) contains internal tooling for maintaining the starter kit itself.
+
+### Documentation Maintenance
+
+A skill + commands system for keeping the `docs/` folder up-to-date:
+
+**Skill:** `docs-maintenance` — Quality standards, incremental update patterns, structure awareness (internal, not user-invocable)
+
+**Commands:**
+
+| Command | Description | Mode |
+|---------|-------------|------|
+| `/docs-sync` | Update docs from official Claude documentation | Opus + Plan agent |
+| `/docs-refine` | Synthesize best practices from articles | Opus + Plan agent |
+| `/docs-audit` | Audit docs for outdated content | Opus + Plan agent |
+| `/inventory` | Stock-take report of all components | Default |
+
+**Features:**
+- `--dry-run` flag for `/docs-sync` — preview changes without editing
+- `--draft` flag for `/docs-sync` — create alternate file for comparison
+- Incremental updates (read-before-write, preserve existing structure)
+- Automatic changelog entry with sub-task tracking
+
+**Reference files:**
+- `.claude/skills/docs-maintenance/reference/quality-standards.md` — Detailed quality criteria
+- `.claude/skills/docs-maintenance/reference/docs-structure.md` — Current docs organization
 
 ---
 

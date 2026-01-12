@@ -1,6 +1,10 @@
 # Inventory Command
 
-Run a comprehensive stock-take of all Claude Code configuration components in the `templates/` folder. Produce a visually rich, color-coded report.
+Run a comprehensive stock-take of all Claude Code configuration components. Covers both:
+- `templates/` folder (what gets copied to new projects)
+- `.claude/` folder (project-level meta-features for maintaining this repo)
+
+Produce a visually rich, color-coded report.
 
 ## Output Format Guidelines
 
@@ -25,6 +29,7 @@ Start with an attention-grabbing health summary. Check for:
 - Missing folders (output-styles/)
 - Skills without SKILL.md
 - Unconfigured settings
+- Project-level meta-features status (docs-maintenance skill, docs commands)
 
 **Format as a colored checklist with sub-bullets for any ⚠️ or 🔴 items:**
 
@@ -35,6 +40,7 @@ Start with an attention-grabbing health summary. Check for:
 ✅ Settings configured with 2 hook events
 ✅ All hooks implemented (agent-notify, post-edit-format, pre-commit, session-start)
 ✅ 4 rules configured (function-safety, uv-commands, nvm-commands, docker-commands)
+✅ Meta-features active (docs-maintenance skill, 4 project commands)
 
 ⚠️ 5 planned CLAUDE.md templates not created
    • CLAUDE-python-cli.md — Python CLI tools (Typer, Rich, pytest)
@@ -107,15 +113,21 @@ Example descriptions:
 #### 3.3 Skills
 List folders in `templates/.claude/skills/`:
 
-| Skill | SKILL.md | Ref Docs | Description |
-|-------|----------|----------|-------------|
+| Skill | SKILL.md | Reference | Description |
+|-------|----------|-----------|-------------|
 | `name/` | ✅/❌ | Count | What this skill provides |
 
-Example descriptions:
-- `frontend-design/` → "Production-grade UI with anti-AI-slop guidelines"
-- `shell-functions/` → "Best practices for .zsh/.bash function development, UV/NVM patterns"
-- `testing-python/` → "Python test isolation and proper uv usage"
-- `testing-javascript/` → "JavaScript/TypeScript testing with Jest and Vitest"
+**Important:** Check for `reference/` subfolder (not `reference-docs/`). Count files in `skill-name/reference/` if it exists.
+
+Example output:
+```
+| Skill | SKILL.md | Reference | Description |
+|-------|----------|-----------|-------------|
+| `frontend-design/` | ✅ | 7 files | Production-grade UI with anti-AI-slop guidelines |
+| `shell-functions/` | ✅ | 0 | Best practices for .zsh/.bash, UV/NVM patterns |
+| `testing-python/` | ✅ | 0 | Python test isolation and proper uv usage |
+| `testing-javascript/` | ✅ | 0 | JavaScript/TypeScript testing with Jest and Vitest |
+```
 
 #### 3.4 Commands (Grouped by Purpose)
 
@@ -181,7 +193,28 @@ Example:
 - `templates/DECISIONS.md` → "Decision journal with examples for memory support"
 - `templates/.claude/CLAUDE.md` → "Claude behavior config: session workflow, commit patterns"
 
-#### 3.8 Settings
+#### 3.8 Project-Level Meta-Features
+
+Report on `.claude/` folder (this repo's own tooling, NOT in templates):
+
+**Skills:**
+| Skill | Purpose | User-Invocable |
+|-------|---------|----------------|
+| `docs-maintenance/` | Quality standards, structure awareness for doc updates | No (internal) |
+
+**Commands:**
+| Command | Description | Mode |
+|---------|-------------|------|
+| `/docs-sync` | Update docs from official Claude documentation | Opus + Plan agent |
+| `/docs-refine` | Synthesize best practices from articles | Opus + Plan agent |
+| `/docs-audit` | Audit docs for outdated content | Opus + Plan agent |
+| `/inventory` | This command — stock-take report | Default |
+
+**Features:**
+- `--dry-run` flag for `/docs-sync` — preview changes without editing
+- `--draft` flag for `/docs-sync` — create alternate file for comparison
+
+#### 3.9 Settings
 Report on `templates/.claude/settings.json` in tabular format:
 
 **Hook Events:**

@@ -138,6 +138,29 @@ templates/
 - `docs/22-troubleshooting.md` - Common issues and solutions
 - `docs/23-testing-evaluation.md` - Success criteria, building evals
 
+## Project Meta-Features
+
+Internal tooling for maintaining this starter kit (in `.claude/`, not `templates/.claude/`).
+
+### Documentation Maintenance
+
+| Command | Description | Mode |
+|---------|-------------|------|
+| `/docs-sync` | Update docs from official Claude documentation | Opus + Plan |
+| `/docs-refine` | Synthesize best practices from articles | Opus + Plan |
+| `/docs-audit` | Audit docs for outdated content | Opus + Plan |
+| `/inventory` | Stock-take report of all template components | Default |
+
+**Features:**
+- `--dry-run` flag for `/docs-sync` — preview changes without editing
+- `--draft` flag for `/docs-sync` — create alternate file for comparison
+
+**Skill:** `docs-maintenance` — Quality standards, structure awareness (internal, not user-invocable)
+
+**Changelog:** `docs/CHANGELOG.md` tracks all documentation updates with sub-tasks
+
+---
+
 ## Roadmap
 
 Planned features - not yet built but documented to preserve intent.
@@ -149,6 +172,7 @@ Planned features - not yet built but documented to preserve intent.
 | `CLAUDE-fastapi.md` | FastAPI backends (SQLAlchemy, Alembic) | Planned |
 | `CLAUDE-fullstack.md` | React + FastAPI combined | Planned |
 | `CLAUDE-devops.md` | Ansible, Docker, infrastructure | Planned |
+| `output-styles/` | Custom output style examples | Planned |
 
 ---
 
