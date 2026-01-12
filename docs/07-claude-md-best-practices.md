@@ -1,6 +1,55 @@
 # CLAUDE.md Best Practices
 
-CLAUDE.md is fully loaded into context at startup. Every word costs tokens. This guide covers how to write effective, efficient CLAUDE.md files.
+CLAUDE.md files (and related memory files) are loaded into context at startup. Every word costs tokens. This guide covers how to write effective, efficient memory files.
+
+## Memory Hierarchy
+
+Claude Code loads memory from multiple locations in order of precedence:
+
+| Memory Type | Location | Purpose | Shared With |
+|-------------|----------|---------|-------------|
+| **Enterprise policy** | System-level `CLAUDE.md`* | Organization-wide instructions | All users |
+| **User memory** | `~/.claude/CLAUDE.md` | Personal preferences | Just you (all projects) |
+| **User rules** | `~/.claude/rules/*.md` | Personal modular rules | Just you (all projects) |
+| **Project memory** | `./CLAUDE.md` or `./.claude/CLAUDE.md` | Team-shared instructions | Team (via git) |
+| **Project rules** | `./.claude/rules/*.md` | Modular project rules | Team (via git) |
+| **Local memory** | `./CLAUDE.local.md` | Personal project preferences | Just you (gitignored) |
+| **Nested memory** | `./subdir/CLAUDE.md` | Directory-specific context | Team (via git) |
+
+*Enterprise policy paths:
+- **macOS**: `/Library/Application Support/ClaudeCode/CLAUDE.md`
+- **Linux/WSL**: `/etc/claude-code/CLAUDE.md`
+- **Windows**: `C:\Program Files\ClaudeCode\CLAUDE.md`
+
+## Memory Lookup Behavior
+
+Claude Code discovers memory recursively:
+
+1. **Parent traversal**: Starting from cwd, recurses up to (but not including) root, reading any `CLAUDE.md` or `CLAUDE.local.md` files found
+
+2. **Subtree discovery**: CLAUDE.md files nested in subdirectories under cwd are discovered but only included when Claude reads files in those subtrees
+
+3. **Priority**: Higher-level files (enterprise, user) are loaded first, providing a foundation that more specific memories build upon
+
+```
+project/
+├── CLAUDE.md              # Always loaded (from cwd)
+├── src/
+│   └── api/
+│       └── CLAUDE.md      # Loaded only when working in src/api/
+└── tests/
+    └── CLAUDE.md          # Loaded only when working in tests/
+```
+
+## Quick Start
+
+Bootstrap a CLAUDE.md for your project:
+
+```
+/init
+```
+
+Or create manually with minimal content.
 
 ## Token Cost Reality
 
@@ -10,16 +59,6 @@ CLAUDE.md is fully loaded into context at startup. Every word costs tokens. This
 - CLAUDE.md is loaded for EVERY interaction
 
 **Target: 50-200 tokens for most projects**
-
-## File Locations
-
-| File | Purpose | Loaded When |
-|------|---------|-------------|
-| `./CLAUDE.md` | Project root context | Always |
-| `./.claude/CLAUDE.md` | Alternative location | Always |
-| `./.claude/rules/*.md` | Modular rules | Always |
-| `./CLAUDE.local.md` | Local additions | Always |
-| `./subdir/CLAUDE.md` | Directory-specific | When reading files there |
 
 ## Structure Template
 
@@ -44,6 +83,143 @@ Brief one-line description.
 ## Notes
 [Any critical context Claude must always know]
 ```
+
+## Import Syntax
+
+CLAUDE.md files can import other files using `@path/to/import`:
+
+```markdown
+See @README for project overview and @package.json for npm commands.
+
+# Additional Instructions
+- git workflow @docs/git-instructions.md
+```
+
+### Import Rules
+
+- Both relative and absolute paths are allowed
+- Home directory imports work: `@~/.claude/my-project-instructions.md`
+- Imports inside code spans and code blocks are ignored
+- Imports are resolved recursively (max depth: 5)
+- Use `/memory` command to see loaded files
+
+### Team-Friendly Imports
+
+Allow team members to provide individual instructions without committing:
+
+```markdown
+# Team Overrides
+@~/.claude/my-project-instructions.md
+```
+
+This works better than CLAUDE.local.md across multiple git worktrees.
+
+## Modular Rules with `.claude/rules/`
+
+For larger projects, organize instructions into focused rule files:
+
+```
+.claude/
+├── CLAUDE.md           # Minimal main file
+└── rules/
+    ├── code-style.md   # Code style guidelines
+    ├── testing.md      # Testing conventions
+    └── security.md     # Security requirements
+```
+
+All `.md` files in `.claude/rules/` are automatically loaded as project memory.
+
+### Path-Specific Rules
+
+Scope rules to specific files using YAML frontmatter:
+
+```markdown
+---
+paths:
+  - "src/api/**/*.ts"
+---
+
+# API Development Rules
+
+- All API endpoints must include input validation
+- Use the standard error response format
+- Include OpenAPI documentation comments
+```
+
+Rules without a `paths` field apply to all files.
+
+### Glob Patterns
+
+| Pattern | Matches |
+|---------|---------|
+| `**/*.ts` | All TypeScript files in any directory |
+| `src/**/*` | All files under `src/` |
+| `*.md` | Markdown files in project root |
+| `src/components/*.tsx` | React components in specific directory |
+
+Multiple patterns allowed:
+
+```markdown
+---
+paths:
+  - "src/**/*.ts"
+  - "lib/**/*.ts"
+  - "tests/**/*.test.ts"
+---
+```
+
+Brace expansion supported:
+
+```markdown
+---
+paths:
+  - "src/**/*.{ts,tsx}"
+  - "{src,lib}/**/*.ts"
+---
+```
+
+### Rule Subdirectories
+
+Organize rules into folders:
+
+```
+.claude/rules/
+├── frontend/
+│   ├── react.md
+│   └── styles.md
+├── backend/
+│   ├── api.md
+│   └── database.md
+└── general.md
+```
+
+All `.md` files are discovered recursively.
+
+### Symlinks
+
+Share common rules across projects:
+
+```bash
+# Symlink a shared rules directory
+ln -s ~/shared-claude-rules .claude/rules/shared
+
+# Symlink individual files
+ln -s ~/company-standards/security.md .claude/rules/security.md
+```
+
+Symlinks are resolved normally. Circular symlinks are detected and handled gracefully.
+
+### User-Level Rules
+
+Personal rules that apply to all your projects:
+
+```
+~/.claude/rules/
+├── preferences.md    # Your coding preferences
+└── workflows.md      # Your preferred workflows
+```
+
+User-level rules load before project rules (project rules have higher priority).
 
 ## Examples by Project Type
 
@@ -140,6 +316,7 @@ Backend: Python, FastAPI, SQLAlchemy, PostgreSQL
 ## What NOT to Include
 
 ### 1. Detailed How-To Guides
+
 ❌ Bad (200 tokens):
 ```markdown
 ## How to Add a New Endpoint
@@ -156,6 +333,7 @@ See .claude/skills/api/
 ```
 
 ### 2. Full Documentation
+
 ❌ Bad:
 ```markdown
 ## API Documentation
@@ -172,6 +350,7 @@ API docs: See OpenAPI at /docs
 ```
 
 ### 3. Code Examples
+
 ❌ Bad:
 ```markdown
 ## Example Component
@@ -187,6 +366,7 @@ Component patterns: See src/components/examples/
 ```
 
 ### 4. Every Convention
+
 ❌ Bad:
 ```markdown
 - Use const not let
@@ -202,47 +382,9 @@ Component patterns: See src/components/examples/
 Style: ESLint + Prettier enforced via hooks
 ```
 
-## Using Rules Directory
-
-For more complex projects, use `.claude/rules/`:
-
-```
-.claude/
-├── CLAUDE.md           # Minimal, links to rules
-└── rules/
-    ├── security.md     # Security constraints
-    ├── testing.md      # Testing requirements
-    └── api.md          # API conventions
-```
-
-CLAUDE.md:
-```markdown
-# MyProject
-
-See .claude/rules/ for detailed conventions.
-```
-
-**Warning**: All rules files are loaded at startup too. Keep them focused.
-
-## Leveraging Nested CLAUDE.md
-
-Directory-specific CLAUDE.md files are only loaded when Claude reads files there:
-
-```
-project/
-├── CLAUDE.md              # Always loaded (minimal)
-├── src/
-│   └── api/
-│       └── CLAUDE.md      # Loaded when working in src/api/
-└── tests/
-    └── CLAUDE.md          # Loaded when working in tests/
-```
-
-This is more token-efficient than putting everything in root CLAUDE.md.
-
 ## Local Additions
 
-Use `CLAUDE.local.md` for personal notes (not committed):
+Use `CLAUDE.local.md` for personal notes (automatically gitignored):
 
 ```markdown
 # Local Notes
@@ -252,20 +394,17 @@ Use `CLAUDE.local.md` for personal notes (not committed):
 - TODO: Refactor auth module
 ```
 
-## Import Syntax
+## Managing Memory
 
-Reference other files (resolved recursively, max depth 5):
+### View Loaded Memory
 
-```markdown
-# Project
-
-@.claude/rules/security.md
-@.claude/rules/testing.md
+```
+/memory
 ```
 
-**Note**: Imported content is loaded immediately, so use sparingly.
+Opens memory files in your system editor and shows what's loaded.
 
-## Measuring Efficiency
+### Measuring Efficiency
 
 ```bash
 # Count words (multiply by 1.3 for tokens)
@@ -278,13 +417,51 @@ wc -w CLAUDE.md .claude/CLAUDE.md .claude/rules/*.md 2>/dev/null
 /context
 ```
 
-## Summary Checklist
+## Organization-Level Memory
 
-- [ ] Under 200 tokens for typical projects
-- [ ] Stack listed concisely
-- [ ] Key commands included
-- [ ] Only critical conventions (3-5 max)
-- [ ] Detailed guides moved to skills
-- [ ] Code examples in separate files
-- [ ] Using nested CLAUDE.md for large projects
-- [ ] Rules directory for modular organization
+Organizations can deploy centrally managed CLAUDE.md files:
+
+1. Create the managed memory file at the enterprise policy location
+2. Deploy via configuration management (MDM, Group Policy, Ansible, etc.)
+3. All users on the machine will receive these instructions
+
+This ensures consistent standards across all developer machines.
+
+## Best Practices Summary
+
+### Do
+
+- [ ] Keep under 200 tokens for typical projects
+- [ ] List stack concisely
+- [ ] Include key commands
+- [ ] Limit to 3-5 critical conventions
+- [ ] Move detailed guides to skills
+- [ ] Put code examples in separate files
+- [ ] Use nested CLAUDE.md for large projects
+- [ ] Use rules directory for modular organization
+- [ ] Use path-specific rules for targeted guidance
+
+### Don't
+
+- [ ] Include full documentation
+- [ ] Add code examples inline
+- [ ] List every coding convention
+- [ ] Duplicate content between files
+- [ ] Include API references
+
+## Token Impact
+
+| Component | Token Cost | Notes |
+|-----------|------------|-------|
+| CLAUDE.md | ~50-200 | Target range for most projects |
+| rules/*.md | Variable | All loaded at startup |
+| Nested CLAUDE.md | Conditional | Only when working in that subtree |
+| CLAUDE.local.md | Variable | Personal additions |
+
+**Goal**: Minimize startup token cost while providing essential context.
+
+## See Also
+
+- [Token Management](./04-token-management.md) - Context optimization strategies
+- [Skills Reference](./03-skills.md) - Move detailed content to skills
+- [Settings Reference](./05-settings-reference.md) - Configuration options

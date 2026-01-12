@@ -28,6 +28,7 @@ Claude Code reads configuration from multiple levels (in order of precedence):
 ├── scripts/               # Helper scripts (executed, not in context)
 ├── skills/                # Agent skills (metadata loaded, content lazy)
 ├── commands/              # Slash commands (loaded when invoked)
+├── agents/                # Custom subagents (metadata only at startup)
 └── rules/                 # Additional rules (ALL loaded into context)
 ```
 
@@ -42,6 +43,7 @@ Claude Code reads configuration from multiple levels (in order of precedence):
 | **Hook scripts** | Executed only | ZERO |
 | **Skills** | Metadata only | LOW (~100 tokens each) |
 | **Skill content** | On-demand | ZERO at startup |
+| **Agents** | Metadata only | LOW (~50 tokens each) |
 | **Commands** | On invocation | ZERO at startup |
 
 ## Design Principles
@@ -54,10 +56,10 @@ Claude Code reads configuration from multiple levels (in order of precedence):
 ## Documentation Index
 
 - [01-overview.md](./01-overview.md) - This file
-- [02-hooks.md](./02-hooks.md) - Hook events, configuration, examples
-- [03-skills.md](./03-skills.md) - Creating and using skills (progressive disclosure, authoring best practices)
-- [04-token-management.md](./04-token-management.md) - Context and token optimization
-- [05-settings-reference.md](./05-settings-reference.md) - settings.json configuration
+- [02-hooks.md](./02-hooks.md) - Complete hook reference: events, input/output, decision control, prompt-based hooks
+- [03-skills.md](./03-skills.md) - Creating and using skills: progressive disclosure, authoring best practices
+- [04-token-management.md](./04-token-management.md) - Context and token optimization strategies
+- [05-settings-reference.md](./05-settings-reference.md) - Complete settings.json reference: scopes, permissions, sandbox, MCP, plugins
 - [06-plugins.md](./06-plugins.md) - Plugin system (for reference)
-- [07-claude-md-best-practices.md](./07-claude-md-best-practices.md) - Writing effective CLAUDE.md
+- [07-claude-md-best-practices.md](./07-claude-md-best-practices.md) - Memory files: hierarchy, imports, path-specific rules
 - [08-existing-global-config.md](./08-existing-global-config.md) - Existing global configuration reference
