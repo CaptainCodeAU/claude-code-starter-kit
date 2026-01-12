@@ -14,6 +14,10 @@ TTS_RATE=175
 NOTIFICATION_SOUND="Glass"
 MAX_SUMMARY_LENGTH=60
 
+# Get script directory for finding assets
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CUSTOM_SOUND="${SCRIPT_DIR}/../sounds/agent-complete.mp3"
+
 # --- Helper Functions ---
 
 log_info() { echo "[INFO] $*"; }
@@ -100,7 +104,13 @@ extract_prompt_from_transcript() {
   ' -r < "$transcript_path" 2>/dev/null || true
 }
 
-# --- macOS TTS ---
+# --- Audio ---
+
+play_completion_sound() {
+  if [[ -f "$CUSTOM_SOUND" ]]; then
+    afplay "$CUSTOM_SOUND" 2>/dev/null &
+  fi
+}
 
 speak_message() {
   local message="$1"
@@ -172,6 +182,9 @@ main() {
   fi
 
   local message="Agent finished: ${summary}"
+
+  # Play completion sound
+  play_completion_sound
 
   # Send visual notification
   send_notification "Claude Code" "$message"
