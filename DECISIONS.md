@@ -301,3 +301,46 @@ claude-init react ~/my-project  # Bootstrap a React project with templates
 - `main.py` - Simple entry point script
 - `src/claude_code_starter_kit/` - Package source (cli.py, core.py)
 - `tests/` - Test suite skeleton
+
+---
+
+### 2026-01-13: Docs Maintenance Meta-Feature Implementation
+
+**Context:** User wanted to convert the ad-hoc `DOCS-UPDATE-GUIDE.md` and `DOCS-UPDATE-PROGRESS.md` workflow into integrated tooling for maintaining the starter kit's documentation.
+
+**Problem solved:**
+1. Docs need periodic updates when official Claude docs change
+2. Updates must be incremental (preserve structure, don't rewrite)
+3. Two use cases: official doc sync AND best practices synthesis
+4. Previous workflow required manual mode/model switching
+
+**Solution chosen:** Option 3 — Skill + Commands hybrid
+
+**Why this approach:**
+- Skill contains shared domain knowledge (quality standards, structure awareness)
+- Commands provide clear entry points for different use cases
+- Reference files keep skill lean while providing detailed guidance
+- Commands enforce Opus model via frontmatter
+- Commands use `context: fork` + `agent: Plan` for planning-focused execution
+
+**Components created:**
+
+```
+.claude/
+├── skills/docs-maintenance/
+│   ├── SKILL.md                    # Core instructions
+│   └── reference/
+│       ├── quality-standards.md    # Detailed quality criteria
+│       └── docs-structure.md       # Current docs/ organization
+│
+└── commands/
+    ├── docs-sync.md                # UC1: Official doc updates
+    ├── docs-refine.md              # UC2: Best practices synthesis
+    └── docs-audit.md               # UC3: Check for outdated content
+```
+
+**Changelog integration:** Commands track sub-tasks during execution and append detailed entries to `docs/CHANGELOG.md`.
+
+**Migration:** After confirming this works, user will manually delete:
+- `DOCS-UPDATE-GUIDE.md` (content moved to skill)
+- `DOCS-UPDATE-PROGRESS.md` (content moved to `docs/CHANGELOG.md`)
