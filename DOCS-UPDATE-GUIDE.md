@@ -2,6 +2,8 @@
 
 Use this guide to update the `docs/` folder with the latest official Claude Code documentation.
 
+**Progress Tracking:** See [DOCS-UPDATE-PROGRESS.md](./DOCS-UPDATE-PROGRESS.md) for session status and completed work.
+
 ---
 
 ## Important: URL Format
