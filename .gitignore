@@ -1,6 +1,9 @@
 # Ignore folder for template experiments/drafts
 _templates_ignore/
 
+# Temp folder for user's personal config files (not part of templates)
+Temp/
+
 # macOS
 .DS_Store
 
