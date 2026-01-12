@@ -186,7 +186,7 @@ your-project/
     ├── skills/            # Detailed instruction sets
     │   ├── frontend-design/
     │   ├── shell-functions/
-    │   ├── testing-practices/
+    │   ├── testing-python/
     │   └── testing-javascript/
     ├── commands/          # Slash commands (/polish, /audit, etc.)
     ├── agents/            # Specialized assistants
@@ -212,7 +212,7 @@ your-project/
 ### Delete what you don't need
 
 - **Not doing frontend?** Delete `skills/frontend-design/` and the frontend commands
-- **Not using Python?** Delete `skills/testing-practices/` and `rules/uv-commands.md`
+- **Not using Python?** Delete `skills/testing-python/` and `rules/uv-commands.md`
 - **Not using Node.js?** Delete `skills/testing-javascript/` and `rules/nvm-commands.md`
 - **Not using Docker?** Delete `rules/docker-commands.md`
 - **Not on macOS?** Delete or modify `hooks/agent-notify.sh`

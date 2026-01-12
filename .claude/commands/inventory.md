@@ -114,7 +114,7 @@ List folders in `templates/.claude/skills/`:
 Example descriptions:
 - `frontend-design/` → "Production-grade UI with anti-AI-slop guidelines"
 - `shell-functions/` → "Best practices for .zsh/.bash function development, UV/NVM patterns"
-- `testing-practices/` → "Python test isolation and proper uv usage"
+- `testing-python/` → "Python test isolation and proper uv usage"
 - `testing-javascript/` → "JavaScript/TypeScript testing with Jest and Vitest"
 
 #### 3.4 Commands (Grouped by Purpose)

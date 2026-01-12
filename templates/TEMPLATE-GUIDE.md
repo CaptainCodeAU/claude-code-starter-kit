@@ -82,7 +82,7 @@ You have TWO CLAUDE.md files - both are loaded every session:
 |-------|------|-------------|---------------|
 | `frontend-design/` | `frontend-design` | Create distinctive, production-grade frontend interfaces. Anti-AI-slop aesthetics. Includes 7 reference docs. | React, Vue, frontend projects |
 | `shell-functions/` | `developing-shell-functions` | Best practices for .zsh_*, .bashrc shell function development. UV/NVM integration patterns. | Shell scripts, dotfiles |
-| `testing-practices/` | `testing-python` | Python test isolation, venv verification, uv usage | Python projects |
+| `testing-python/` | `testing-python` | Python test isolation, venv verification, uv usage | Python projects |
 | `testing-javascript/` | `testing-javascript` | JavaScript/TypeScript testing with Jest and Vitest. Mocking, async, testing-library. | Node.js, React projects |
 
 ### Documentation Skills
