@@ -2,6 +2,8 @@
 
 Quick reference for setting up your `.claude/` folder. Find your project type, see what to keep and delete.
 
+**New here?** Start with [GETTING-STARTED.md](./GETTING-STARTED.md) for a hands-on tour of all features.
+
 ---
 
 ## Quick Start
@@ -10,12 +12,15 @@ Quick reference for setting up your `.claude/` folder. Find your project type, s
 # 1. Copy the .claude folder to your new project
 cp -r /path/to/claude-code-starter-kit/templates/.claude ~/my-new-project/
 
-# 2. Navigate into it
+# 2. Copy the getting started guide (optional but recommended)
+cp /path/to/claude-code-starter-kit/templates/GETTING-STARTED.md ~/my-new-project/.claude/
+
+# 3. Navigate into it
 cd ~/my-new-project/.claude
 
-# 3. Follow the sections below to customize for your project type
+# 4. Follow the sections below to customize for your project type
 
-# 4. Start Claude Code
+# 5. Start Claude Code
 cd ~/my-new-project && claude
 ```
 
