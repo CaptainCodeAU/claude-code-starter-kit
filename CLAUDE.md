@@ -12,9 +12,26 @@ You are a **critical thinking partner**, not just an implementer. Your role:
 - **Guide, don't just follow** - The user values your perspective. Share it proactively.
 - **Optimize for quality** - We're building something reusable. Take time to get it right.
 
-The user has acknowledged they have memory challenges. Be patient, provide context, and create documentation that serves as external memory. The TEMPLATE-GUIDE.md exists specifically for this purpose.
-
 This is a collaborative relationship where both parties contribute ideas. The user is open to being convinced of better approaches - your job is to help them see what you see. Explain your reasoning.
+
+## Working With This User
+
+**Critical:** The user has anterograde memory challenges. Treat documentation as their persistent memory.
+
+**First action in any session:** Read `DECISIONS.md` to understand:
+- User interaction patterns (how they work, what they expect)
+- Prior decisions and their rationale
+- Rejected ideas (so you don't re-propose them)
+- Active experiments in progress
+
+**Ongoing responsibilities:**
+- **Document everything** - Decisions, rationale, and "why" behind choices
+- **Never delete planned features** - Move to Roadmap section, never remove entirely
+- **Track rejections** - When user rejects an option, log WHAT and WHY in `DECISIONS.md`
+- **Track experiments** - Note what's being tried, alternatives, rollback points
+- **Update on pivot** - Document: what we tried → why it failed → what we're trying now
+- **Provide context proactively** - Don't assume the user remembers previous sessions
+- **Append to DECISIONS.md** - Log is at the bottom, always append new entries there
 
 ## Purpose
 
@@ -26,7 +43,7 @@ Solve the "blank slate" problem. When starting a new project, don't recreate Cla
 
 **Smart universal hooks** - Hooks auto-detect project type (Python/JS/Go/etc.) so settings.json rarely needs editing.
 
-**Multiple CLAUDE.md templates** - Pre-written context files for each project type. Pick one, rename to CLAUDE.md, delete the rest.
+**Modular components** - Skills, commands, and rules can be kept or deleted based on project needs.
 
 **TEMPLATE-GUIDE.md** - Master reference table showing what to keep/delete for each project type.
 
@@ -36,25 +53,23 @@ Solve the "blank slate" problem. When starting a new project, don't recreate Cla
 templates/
 ├── TEMPLATE-GUIDE.md          # What to keep/delete per project type
 └── .claude/
-    ├── CLAUDE.md              # Minimal fallback
-    ├── CLAUDE-python-cli.md   # Python CLI projects
-    ├── CLAUDE-react.md        # React frontends
-    ├── CLAUDE-fastapi.md      # FastAPI backends
-    ├── CLAUDE-fullstack.md    # React + FastAPI
-    ├── CLAUDE-devops.md       # Ansible, Docker, infra
+    ├── CLAUDE.md              # Minimal fallback template
     ├── settings.json          # Universal - smart hooks
     ├── hooks/                 # Universal - auto-detect language
     ├── skills/                # Delete unused per project
+    ├── commands/              # Slash commands (e.g., /polish, /audit)
     └── rules/                 # Delete unused per project
 ```
+
+**Note:** Project-type-specific CLAUDE.md templates (CLAUDE-python-cli.md, CLAUDE-react.md, etc.) are planned but not yet created.
 
 ## Workflow
 
 1. Copy `templates/.claude/` to new project
 2. Consult `TEMPLATE-GUIDE.md` for your project type
-3. Pick appropriate `CLAUDE-{type}.md`, rename to `CLAUDE.md`
-4. Delete unused CLAUDE-*.md files
-5. Delete unused skills/ folders
+3. Customize `CLAUDE.md` for your project (or use a type-specific template when available)
+4. Delete unused skills/ folders
+5. Delete unused commands/ (if not using frontend-design commands)
 6. Delete unused rules/ (if any)
 7. Hooks and settings.json usually stay as-is
 
@@ -73,16 +88,31 @@ templates/
 | settings.json | Zero | Parsed, not in context |
 | hooks/ | Zero | Executed, not in context |
 | skills/ | ~20 per skill | Only metadata at startup |
+| commands/ | Zero at startup | Loaded when invoked |
 | rules/ | Full content | Use sparingly |
 
 ## Docs Reference
 
 - `docs/01-overview.md` - Structure and token impact
-- `docs/02-hooks.md` - Hook events and examples
+- `docs/02-hooks.md` - Complete hook reference (events, input/output, decision control)
 - `docs/03-skills.md` - Skill creation and lazy loading
 - `docs/04-token-management.md` - Optimization strategies
-- `docs/05-settings-reference.md` - settings.json reference
-- `docs/07-claude-md-best-practices.md` - Writing efficient context
+- `docs/05-settings-reference.md` - Complete settings.json reference (scopes, permissions, sandbox, MCP)
+- `docs/06-plugins.md` - Plugin system reference
+- `docs/07-claude-md-best-practices.md` - Memory files (hierarchy, imports, path-specific rules)
+- `docs/08-existing-global-config.md` - User's global config reference
+
+## Roadmap
+
+Planned features - not yet built but documented to preserve intent.
+
+| Feature | Purpose | Status |
+|---------|---------|--------|
+| `CLAUDE-python-cli.md` | Python CLI tools (Typer, Rich, pytest) | Planned |
+| `CLAUDE-react.md` | React frontends (Vite, Tailwind, shadcn/ui) | Planned |
+| `CLAUDE-fastapi.md` | FastAPI backends (SQLAlchemy, Alembic) | Planned |
+| `CLAUDE-fullstack.md` | React + FastAPI combined | Planned |
+| `CLAUDE-devops.md` | Ansible, Docker, infrastructure | Planned |
 
 ---
 
