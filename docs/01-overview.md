@@ -60,6 +60,21 @@ Claude Code reads configuration from multiple levels (in order of precedence):
 - [03-skills.md](./03-skills.md) - Creating and using skills: progressive disclosure, authoring best practices
 - [04-token-management.md](./04-token-management.md) - Context and token optimization strategies
 - [05-settings-reference.md](./05-settings-reference.md) - Complete settings.json reference: scopes, permissions, sandbox, MCP, plugins
-- [06-plugins.md](./06-plugins.md) - Plugin system (for reference)
+- [06-plugins.md](./06-plugins.md) - Plugin system: structure, manifest schema, components, installation, caching, debugging
 - [07-claude-md-best-practices.md](./07-claude-md-best-practices.md) - Memory files: hierarchy, imports, path-specific rules
 - [08-existing-global-config.md](./08-existing-global-config.md) - Existing global configuration reference
+- [09-subagents.md](./09-subagents.md) - Subagents: built-in agents, custom agents, tool control, hooks, examples
+- [10-slash-commands.md](./10-slash-commands.md) - Slash commands: built-in, custom, frontmatter, MCP commands, Skill tool
+- [11-mcp.md](./11-mcp.md) - MCP (Model Context Protocol): servers, scopes, authentication, managed config
+- [12-cli-reference.md](./12-cli-reference.md) - CLI commands, flags, and options
+- [13-headless-mode.md](./13-headless-mode.md) - Headless mode: programmatic CLI usage, structured output, automation
+- [14-github-actions.md](./14-github-actions.md) - GitHub Actions: CI/CD integration, workflows, cloud providers
+- [15-checkpointing.md](./15-checkpointing.md) - Checkpointing: automatic tracking, rewind, recovery
+- [16-interactive-mode.md](./16-interactive-mode.md) - Keyboard shortcuts, vim mode, terminal configuration
+- [17-output-styles.md](./17-output-styles.md) - Output styles for non-coding use cases
+- [18-model-configuration.md](./18-model-configuration.md) - Model aliases, selection, and prompt caching
+- [19-statusline.md](./19-statusline.md) - Custom statusline configuration and examples
+- [20-agent-sdk.md](./20-agent-sdk.md) - Agent SDK: building programmatic agents in TypeScript and Python
+- [21-prompt-engineering.md](./21-prompt-engineering.md) - Prompt engineering: techniques for effective Claude prompts
+- [22-troubleshooting.md](./22-troubleshooting.md) - Common issues: installation, authentication, performance, IDE integration
+- [23-testing-evaluation.md](./23-testing-evaluation.md) - Testing and evaluation: success criteria, building evals, grading methods
