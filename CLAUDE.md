@@ -58,6 +58,8 @@ templates/
     ├── hooks/                 # Universal - auto-detect language
     ├── skills/                # Delete unused per project
     ├── commands/              # Slash commands (e.g., /polish, /audit)
+    ├── agents/                # Custom subagents (delete unused)
+    ├── output-styles/         # Custom output styles (optional)
     └── rules/                 # Delete unused per project
 ```
 
@@ -89,10 +91,13 @@ templates/
 | hooks/ | Zero | Executed, not in context |
 | skills/ | ~20 per skill | Only metadata at startup |
 | commands/ | Zero at startup | Loaded when invoked |
+| agents/ | ~50 per agent | Only metadata at startup |
+| output-styles/ | Zero at startup | Loaded when selected |
 | rules/ | Full content | Use sparingly |
 
 ## Docs Reference
 
+### Core Configuration (01-08)
 - `docs/01-overview.md` - Structure and token impact
 - `docs/02-hooks.md` - Complete hook reference (events, input/output, decision control)
 - `docs/03-skills.md` - Skill creation and lazy loading
@@ -101,6 +106,29 @@ templates/
 - `docs/06-plugins.md` - Plugin system reference
 - `docs/07-claude-md-best-practices.md` - Memory files (hierarchy, imports, path-specific rules)
 - `docs/08-existing-global-config.md` - User's global config reference
+
+### Extensibility (09-11)
+- `docs/09-subagents.md` - Custom subagents, tool control, hooks
+- `docs/10-slash-commands.md` - Built-in/custom commands, frontmatter, Skill tool
+- `docs/11-mcp.md` - MCP servers, scopes, authentication
+
+### CLI & Automation (12-15)
+- `docs/12-cli-reference.md` - CLI commands, flags, options
+- `docs/13-headless-mode.md` - Programmatic CLI, structured output
+- `docs/14-github-actions.md` - CI/CD integration, workflows
+- `docs/15-checkpointing.md` - Automatic tracking, rewind, recovery
+
+### UI & Configuration (16-19)
+- `docs/16-interactive-mode.md` - Keyboard shortcuts, vim mode, terminal config
+- `docs/17-output-styles.md` - Custom output styles for different use cases
+- `docs/18-model-configuration.md` - Model aliases, selection, prompt caching
+- `docs/19-statusline.md` - Custom statusline configuration
+
+### Advanced Topics (20-23)
+- `docs/20-agent-sdk.md` - Building programmatic agents (TypeScript/Python)
+- `docs/21-prompt-engineering.md` - Prompting techniques and patterns
+- `docs/22-troubleshooting.md` - Common issues and solutions
+- `docs/23-testing-evaluation.md` - Success criteria, building evals
 
 ## Roadmap
 

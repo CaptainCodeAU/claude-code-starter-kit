@@ -38,6 +38,20 @@ cd ~/my-new-project && claude
 | `pre-commit.sh` | Runs before git commits (stub) | N/A - customize for your stack |
 | `session-start.sh` | Runs when Claude Code starts (stub) | N/A - customize for your stack |
 
+### Available Hook Events
+
+| Event | When It Fires | Common Uses |
+|-------|--------------|-------------|
+| `PreToolUse` | Before Claude uses a tool | Validate inputs, block dangerous commands |
+| `PostToolUse` | After a tool completes | Format output, add context, log actions |
+| `Stop` | When main agent finishes | Notifications, cleanup, summaries |
+| `SubagentStop` | When a subagent finishes | Notifications for background tasks |
+| `SessionStart` | When Claude Code starts | Environment checks, welcome messages |
+| `UserPromptSubmit` | When user submits a prompt | Validate/modify user input |
+| `Notification` | When Claude sends a notification | Custom notification handling |
+| `PreCompact` | Before context compaction | Save important context |
+| `PermissionRequest` | When permission is requested | Auto-approve/deny patterns |
+
 ---
 
 ## Step 3: Skills Reference
@@ -69,7 +83,53 @@ cd ~/my-new-project && claude
 
 ---
 
-## Step 5: Commands
+## Step 5: Agents (Subagents)
+
+Custom subagents run in isolated contexts with their own tool permissions.
+
+| Agent | Purpose | When to Keep |
+|-------|---------|--------------|
+| `code-reviewer/` | Code review with specific focus areas | Code review workflows |
+| *(Add your custom agents)* | | |
+
+### Agent Frontmatter Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Unique identifier (lowercase, hyphens) |
+| `description` | Yes | When Claude should delegate to this agent |
+| `tools` | No | Allowed tools (e.g., `["Read", "Glob", "Grep"]`) |
+| `disallowedTools` | No | Blocked tools |
+| `model` | No | Override model (e.g., `haiku` for fast tasks) |
+| `permissionMode` | No | `default`, `bypassPermissions`, `alwaysAsk` |
+| `skills` | No | Array of skill names to load |
+| `hooks` | No | Agent-scoped hooks |
+
+---
+
+## Step 6: Output Styles
+
+Custom output styles modify Claude's communication approach.
+
+| Style | Purpose | When to Keep |
+|-------|---------|--------------|
+| *(Add custom styles as created)* | | |
+
+### Output Style Frontmatter
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Display name for the style |
+| `description` | Yes | What this style does |
+| `keep-coding-instructions` | No | Set `true` to preserve coding behavior (default: `false`) |
+
+**Location:** `.claude/output-styles/` or `~/.claude/output-styles/`
+
+**Trigger:** `/output-style` command or `outputStyle` in settings.json
+
+---
+
+## Step 7: Commands
 
 Commands are slash-invoked workflows (e.g., `/polish`, `/audit`).
 
@@ -147,6 +207,21 @@ The `frontend-design/` skill includes 7 reference documents:
 - `interaction-design.md` - States, focus, forms, modals
 - `responsive-design.md` - Breakpoints, container queries, safe areas
 - `ux-writing.md` - Labels, errors, empty states, voice
+
+### Agents
+
+Each agent folder contains:
+- `AGENT.md` - Required: YAML frontmatter (name, description, tools) + markdown instructions
+- Agent runs in isolated context with specified tool permissions
+
+**Token cost:** ~50 tokens per agent (metadata only at startup)
+
+### Output Styles
+
+Each output style file contains:
+- `style-name.md` - YAML frontmatter (name, description) + markdown instructions
+
+**Token cost:** Zero at startup (loaded when selected via `/output-style`)
 
 ### Rules
 

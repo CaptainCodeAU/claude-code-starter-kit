@@ -5,9 +5,13 @@
     "deny": []
   },
   "hooks": {
-    "PostToolUse": [],
     "PreToolUse": [],
+    "PostToolUse": [],
     "SessionStart": [],
+    "UserPromptSubmit": [],
+    "Notification": [],
+    "PreCompact": [],
+    "PermissionRequest": [],
     "Stop": [
       {
         "hooks": [
