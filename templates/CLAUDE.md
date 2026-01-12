@@ -12,14 +12,20 @@ Brief description of what this project does.
 ## Commands
 
 ```bash
-# Development
-[dev command, e.g., uv run python main.py]
+# Python Development
+uv run python main.py           # Run script
+uv run pytest                   # Run tests
+uv run ruff check .             # Lint
+uv run ruff format .            # Format
 
-# Testing
-[test command, e.g., uv run pytest]
+# Node.js Development
+pnpm dev                        # Development server
+pnpm test                       # Run tests
+pnpm build                      # Build for production
 
-# Build
-[build command, e.g., npm run build]
+# Setup Commands
+python_setup 3.13 dev           # Setup Python project
+node_setup                      # Setup Node project
 ```
 
 ## Project Structure
@@ -30,9 +36,11 @@ Brief description of what this project does.
 
 ## Conventions
 
-- [Convention 1, e.g., Use type hints for all function signatures]
-- [Convention 2, e.g., Tests go in tests/ mirroring src/ structure]
-- [Convention 3, e.g., Commit messages follow Conventional Commits]
+- **Python:** Use `uv` for all operations (never direct `python` or `pip`)
+- **Node.js:** Use `pnpm` for packages, `nvm` manages versions via `.nvmrc`
+- **Environment:** direnv auto-activates `.venv` on directory entry
+- **Formatting:** ruff (Python), prettier (JS/TS), auto-applied via hooks
+- [Add project-specific conventions here]
 
 ## Important Context
 

@@ -127,3 +127,141 @@ function_name() {
 3. **Skipping caller analysis** - NEVER modify shared functions without checking callers
 4. **Inconsistent command usage** - Always use `uv` commands
 5. **File creation order matters** - Create files in correct sequence
+
+## UV/NVM Integration Patterns
+
+### Python Version Helper
+
+```bash
+# Get path to UV-managed Python
+get_uv_python_path() {
+    local version_prefix=$1
+    uv python list 2>/dev/null | \
+        awk -v prefix="cpython-${version_prefix}." -v home="$HOME" \
+            '$1 ~ "^" prefix && $2 ~ /^[\/\.]/ {
+                path = $2
+                if (substr(path, 1, 1) == ".") { path = home "/" path }
+                print path
+            }' | sort -V | tail -n 1
+}
+
+# Usage
+local python_path=$(get_uv_python_path 3.13)
+if [[ -z "$python_path" ]]; then
+    echo "Python 3.13 not installed via uv" >&2
+    return 1
+fi
+```
+
+### NVM Auto-Switch
+
+```bash
+# Automatically switch Node version based on .nvmrc
+load-nvmrc() {
+    local nvmrc_path="$(nvm_find_nvmrc)"
+    if [ -n "$nvmrc_path" ]; then
+        local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+        if [ "$nvmrc_node_version" != "$(nvm version)" ]; then
+            nvm use --silent
+        fi
+    elif [ "$(nvm version)" != "$(nvm version default)" ]; then
+        nvm use default --silent
+    fi
+}
+# Hook into directory change
+add-zsh-hook chpwd load-nvmrc
+```
+
+### Cross-Platform Considerations
+
+```bash
+# Detect OS for conditional logic
+case "$(uname -s)" in
+    Darwin)
+        IS_MAC=true
+        # macOS-specific paths
+        HOMEBREW_PREFIX="${HOMEBREW_PREFIX:-/opt/homebrew}"
+        ;;
+    Linux)
+        if [[ "$(uname -r)" =~ [Ww][Ss][Ll] ]]; then
+            IS_WSL=true
+            # WSL-specific: NTFS doesn't support symlinks well
+            export UV_LINK_MODE=copy
+        else
+            IS_LINUX=true
+        fi
+        ;;
+esac
+```
+
+### direnv Integration
+
+```bash
+# Create .envrc for automatic venv activation
+create_envrc() {
+    if [[ -f ".envrc" ]]; then
+        echo ".envrc already exists. (Skipping)"
+        return
+    fi
+
+    cat <<'EOF' > .envrc
+if [[ -d ".venv" ]]; then
+    export VIRTUAL_ENV_PROMPT="($(basename "$PWD"))"
+    source .venv/bin/activate
+fi
+EOF
+    direnv allow .
+    echo "Created .envrc with venv activation"
+}
+```
+
+### Venv Creation Pattern
+
+```bash
+# Create venv with UV using specific Python version
+create_venv() {
+    local python_version=${1:-"3.13"}
+    local python_path=$(get_uv_python_path "$python_version")
+
+    if [[ -z "$python_path" ]]; then
+        echo "Installing Python $python_version via uv..."
+        uv python install "python@$python_version"
+        python_path=$(get_uv_python_path "$python_version")
+    fi
+
+    echo "Creating .venv with Python $python_version..."
+    uv venv --prompt "$(basename "$PWD")" -p "$python_path"
+}
+```
+
+### Project Setup Wrapper
+
+```bash
+# Full Python project setup
+python_setup() {
+    local python_version=${1:-"3.13"}
+    local extras=${2:-""}  # e.g., "dev" or "dev,cli"
+
+    # Validate we're in a project directory
+    if [[ ! -f "pyproject.toml" ]]; then
+        echo "No pyproject.toml found" >&2
+        return 1
+    fi
+
+    # Create venv if missing
+    if [[ ! -d ".venv" ]]; then
+        create_venv "$python_version"
+    fi
+
+    # Install dependencies
+    if [[ -n "$extras" ]]; then
+        uv pip install --prerelease=allow -e ".[$extras]"
+    else
+        uv pip install --prerelease=allow -e .
+    fi
+
+    # Setup direnv
+    create_envrc
+
+    echo "Project setup complete"
+}

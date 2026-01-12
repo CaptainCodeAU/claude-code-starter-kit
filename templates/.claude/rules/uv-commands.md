@@ -27,3 +27,58 @@
 - All module execution (`-m` flag)
 
 **No exceptions. Always use `uv`.**
+
+## Advanced Patterns
+
+### Virtual Environment Creation
+
+```bash
+# Create venv with specific Python version
+uv venv --prompt "$(basename "$PWD")" -p "$(get_uv_python_path 3.13)"
+
+# Create venv with default Python
+uv venv
+```
+
+### Editable Install with Extras
+
+```bash
+# Install project with dev dependencies
+uv pip install --prerelease=allow -e '.[dev]'
+
+# Install with multiple extras
+uv pip install --prerelease=allow -e '.[dev,cli]'
+```
+
+### Python Version Management
+
+```bash
+# List installed Python versions
+uv python list
+
+# Install a specific Python version
+uv python install python@3.13
+
+# Find path to UV-managed Python
+get_uv_python_path 3.13  # Shell function from .zsh_python_functions
+```
+
+### Sync Dependencies
+
+```bash
+# Sync from lock file
+uv sync
+
+# Sync with dev dependencies
+uv sync --dev
+```
+
+### Adding Dependencies
+
+```bash
+# Add runtime dependency
+uv add <package>
+
+# Add dev dependency
+uv add --dev <package>
+```

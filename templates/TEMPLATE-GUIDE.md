@@ -52,9 +52,9 @@ You have TWO CLAUDE.md files - both are loaded every session:
 | Hook | What It Does | Delete If... |
 |------|--------------|--------------|
 | `agent-notify.sh` | Audio + visual notification when agent finishes (macOS) | You don't want audio alerts |
-| `post-edit-format.sh` | Auto-formats files after edits (stub) | N/A - customize for your stack |
-| `pre-commit.sh` | Runs before git commits (stub) | N/A - customize for your stack |
-| `session-start.sh` | Runs when Claude Code starts (stub) | N/A - customize for your stack |
+| `post-edit-format.sh` | Auto-formats files after edits (ruff, prettier, shfmt) | Never - handles Python/JS/Shell |
+| `pre-commit.sh` | Runs linting checks before git commits (ruff, tsc, eslint) | Never - catches issues early |
+| `session-start.sh` | Environment checks on startup (venv, node_modules, git) | Never - shows project status |
 
 ### Available Hook Events
 
@@ -81,8 +81,9 @@ You have TWO CLAUDE.md files - both are loaded every session:
 | Skill | Name | Description | Project Types |
 |-------|------|-------------|---------------|
 | `frontend-design/` | `frontend-design` | Create distinctive, production-grade frontend interfaces. Anti-AI-slop aesthetics. Includes 7 reference docs. | React, Vue, frontend projects |
-| `shell-functions/` | `developing-shell-functions` | Best practices for .zsh_*, .bashrc shell function development | Shell scripts, dotfiles |
+| `shell-functions/` | `developing-shell-functions` | Best practices for .zsh_*, .bashrc shell function development. UV/NVM integration patterns. | Shell scripts, dotfiles |
 | `testing-practices/` | `testing-python` | Python test isolation, venv verification, uv usage | Python projects |
+| `testing-javascript/` | `testing-javascript` | JavaScript/TypeScript testing with Jest and Vitest. Mocking, async, testing-library. | Node.js, React projects |
 
 ### Documentation Skills
 
@@ -97,7 +98,9 @@ You have TWO CLAUDE.md files - both are loaded every session:
 | Rule | Description | Delete If... |
 |------|-------------|--------------|
 | `function-safety.md` | Search for callers before modifying shared functions | Never - always keep |
-| `uv-commands.md` | Enforce `uv` instead of direct python/pip commands | Not using uv for Python |
+| `uv-commands.md` | Enforce `uv` instead of direct python/pip commands | Not using Python |
+| `nvm-commands.md` | Enforce `nvm`/`pnpm` for Node.js projects | Not using Node.js |
+| `docker-commands.md` | Common Docker patterns and shell functions | Not using Docker |
 
 ---
 
@@ -190,9 +193,9 @@ Commands are slash-invoked workflows (e.g., `/polish`, `/audit`).
 | File | Purpose |
 |------|---------|
 | `agent-notify.sh` | Audio notification (macOS `say`) + Notification Center alert when agent completes. Triggers on Stop/SubagentStop events. |
-| `post-edit-format.sh` | Auto-formats files after edits. Detects file type. (Stub) |
-| `pre-commit.sh` | Runs before git commits. Detects project type. (Stub) |
-| `session-start.sh` | Runs when Claude Code starts. Startup checks. (Stub) |
+| `post-edit-format.sh` | Auto-formats files after edits. Detects file type and runs appropriate formatter (ruff for Python, prettier for JS/TS/JSON/MD/YAML, shfmt for shell). |
+| `pre-commit.sh` | Runs before git commits. Checks Python with ruff/mypy, Node with tsc/eslint based on project type. |
+| `session-start.sh` | Runs when Claude Code starts. Checks for .venv, .nvmrc, node_modules, and shows git status. |
 
 ### Skills Structure
 
@@ -248,4 +251,6 @@ Rules in `rules/` are **always loaded** into context. Use sparingly - they cost 
 | File | Purpose |
 |------|---------|
 | `function-safety.md` | CRITICAL: Requires searching for all callers before modifying any shared function. Prevents silent breakage. |
-| `uv-commands.md` | Enforces `uv run python` and `uv pip` instead of direct `python`/`pip` commands. Ensures correct venv.
+| `uv-commands.md` | Enforces `uv run python` and `uv pip` instead of direct `python`/`pip` commands. Ensures correct venv. |
+| `nvm-commands.md` | Enforces `nvm` for Node version management and `pnpm` instead of `npm`. Consistent across machines. |
+| `docker-commands.md` | Common Docker patterns for dev environments. References shell functions like `pg_dev_start`, `qdrant_start`. |

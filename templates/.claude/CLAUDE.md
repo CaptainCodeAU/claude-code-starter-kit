@@ -41,10 +41,46 @@ This `.claude/` folder includes:
 
 | Component | What's available |
 |-----------|------------------|
-| **Skills** | `frontend-design`, `shell-functions`, `testing-python` |
+| **Skills** | `frontend-design`, `shell-functions`, `testing-python`, `testing-javascript` |
 | **Commands** | `/polish`, `/audit`, `/simplify`, and more |
 | **Agents** | `code-reviewer` |
-| **Rules** | `function-safety`, `uv-commands` |
-| **Hooks** | Notification on task completion |
+| **Rules** | `function-safety`, `uv-commands`, `nvm-commands`, `docker-commands` |
+| **Hooks** | Session checks, auto-formatting, pre-commit validation |
 
 See `GETTING-STARTED.md` to explore these features.
+
+## Development Environment
+
+This setup uses cross-platform tooling that works identically on macOS, WSL, and Linux.
+
+### Python (UV-first)
+
+| Task | Command |
+|------|---------|
+| Run script | `uv run python script.py` |
+| Run tests | `uv run pytest` |
+| Install deps | `uv pip install -e '.[dev]'` |
+| Add package | `uv add <package>` |
+| Format | `uv run ruff format .` |
+| Lint | `uv run ruff check .` |
+| Type check | `uv run mypy src/` |
+
+**Never use:** `python`, `python3`, `pip`, `pip3` directly.
+
+### Node.js (NVM + pnpm)
+
+| Task | Command |
+|------|---------|
+| Run dev server | `pnpm dev` |
+| Run tests | `pnpm test` |
+| Install deps | `pnpm install` |
+| Add package | `pnpm add <package>` |
+| Build | `pnpm build` |
+
+**Version:** Managed via `.nvmrc` file, auto-switched by shell.
+
+### Environment Activation
+
+- **direnv** auto-activates `.venv` when entering project directory
+- No manual `source .venv/bin/activate` needed
+- `.envrc` file controls environment setup

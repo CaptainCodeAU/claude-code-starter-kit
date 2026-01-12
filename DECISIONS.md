@@ -240,3 +240,41 @@ Ideas that were considered but rejected. Kept here so they're not re-proposed.
 - New entries are simply appended
 - No need to navigate past growing log to find reference sections
 - Clear separation: static reference vs. dynamic log
+
+---
+
+### 2026-01-12: Template Alignment with UV/NVM Cross-Platform Setup
+
+**Context:** User shared their complete shell configuration (.zshrc, .zsh_python_functions, .zsh_node_functions, .zsh_docker_functions, etc.) that they use across all machines (macOS, WSL, Linux). The templates needed to reflect this actual setup.
+
+**Changes made:**
+
+**Rules (3 files):**
+- Created `nvm-commands.md` - Enforces NVM/pnpm for Node.js
+- Created `docker-commands.md` - Common Docker patterns and shell functions
+- Updated `uv-commands.md` - Added advanced UV patterns (venv creation, sync, add)
+
+**Hooks (3 files):**
+- Updated `session-start.sh` - Environment detection (venv, node_modules, git status)
+- Updated `post-edit-format.sh` - Auto-format (ruff, prettier, shfmt)
+- Updated `pre-commit.sh` - Language-aware checks (ruff, tsc, eslint)
+
+**Documentation (3 files):**
+- Updated `templates/CLAUDE.md` - UV/NVM command examples
+- Updated `templates/.claude/CLAUDE.md` - Dev environment section with Python/Node tables
+- Updated `TEMPLATE-GUIDE.md` - Added new rules/skills, updated hook descriptions
+
+**Skills (2 files):**
+- Created `testing-javascript/SKILL.md` - Jest + Vitest testing practices
+- Updated `shell-functions/SKILL.md` - UV/NVM integration patterns
+
+**Key decisions:**
+- Hooks execute auto-fix (not advisory) - ruff/prettier modify files directly
+- JavaScript testing covers both Jest and Vitest equally
+- Docker content is rules only (not a full skill) - keeps it lean
+
+**User preferences incorporated:**
+- UV-first Python (never direct python/pip)
+- NVM + pnpm for Node.js (never npm)
+- direnv for automatic venv activation
+- Cross-platform consistency (same patterns on macOS, WSL, Linux)
