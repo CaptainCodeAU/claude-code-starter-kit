@@ -1,38 +1,278 @@
 # Inventory Command
 
-Run a stock-take of all Claude Code configuration components in the `templates/` folder.
+Run a comprehensive stock-take of all Claude Code configuration components in the `templates/` folder. Produce a visually rich, color-coded report.
 
-## Instructions
+## Output Format Guidelines
 
-Scan the `templates/.claude/` folder and report on:
+**Use colors and emoji throughout for visual clarity:**
+- 🟢 / Green text → Implemented, Complete, Healthy
+- 🟡 / Yellow text → Stub, Planned, Needs attention
+- 🔴 / Red text → Missing, Not created, Error
+- Use **bold** for important counts and labels
+- Use section dividers (`---`) between major sections
 
-### 1. Hooks
-List all files in `templates/.claude/hooks/`. For each file, show:
-- Filename
-- Status: "Stub" if only contains comments and `exit 0`, otherwise "Implemented"
+---
 
-### 2. Rules
-List all `.md` files in `templates/.claude/rules/`. If empty, say "None".
+## Output Structure
 
-### 3. Skills
-List all folders in `templates/.claude/skills/`. For each, check if `SKILL.md` exists. If empty, say "None".
+Generate the report in this exact order:
 
-### 4. CLAUDE.md Templates
-List all `CLAUDE*.md` files in `templates/.claude/`. Indicate which is the base template vs project-specific.
+### 1. 🏥 Health Check
 
-### 5. Settings Files
-List `settings.json` and note if it has actual configuration or just empty arrays.
+Start with an attention-grabbing health summary. Check for:
+- Stub hooks that need implementation
+- Planned templates not yet created (CLAUDE-python-cli.md, etc.)
+- Missing folders (output-styles/)
+- Skills without SKILL.md
+- Unconfigured settings
 
-### 6. Summary
-Provide counts:
-- Total hooks (implemented vs stub)
-- Total rules
-- Total skills
-- Total CLAUDE.md templates
+**Format as a colored checklist with sub-bullets for any ⚠️ or 🔴 items:**
 
-### 7. Missing (Referenced but not created)
-Cross-reference with `README.md` and `TEMPLATE-GUIDE.md` to identify anything mentioned but not yet created.
+```
+🏥 **HEALTH CHECK**
 
-## Output Format
+✅ All skills have SKILL.md files
+✅ Settings configured with 2 hook events
 
-Use a clean markdown table format for each section. Be concise.
+⚠️ 3 stub hooks need implementation
+   • post-edit-format.sh — Auto-format files after edits
+   • pre-commit.sh — Run checks before commits
+   • session-start.sh — Setup tasks when session begins
+
+⚠️ 5 planned CLAUDE.md templates not created
+   • CLAUDE-python-cli.md — Python CLI tools (Typer, Rich, pytest)
+   • CLAUDE-react.md — React frontends (Vite, Tailwind, shadcn/ui)
+   • CLAUDE-fastapi.md — FastAPI backends (SQLAlchemy, Alembic)
+   • CLAUDE-fullstack.md — React + FastAPI combined
+   • CLAUDE-devops.md — Ansible, Docker, infrastructure
+
+⚠️ output-styles/ folder doesn't exist
+   • No custom output styles defined yet
+```
+
+**This section is the single source of truth for what needs attention.** The Quick Dashboard Details column should only describe what's complete (green items).
+
+---
+
+### 2. 📊 Quick Dashboard
+
+Provide a compact summary with counts, status indicators, and helpful context:
+
+```
+📊 **QUICK DASHBOARD**
+
+| Component | Count | Status | Details |
+|-----------|-------|--------|---------|
+| Hooks | 4 | 🟢 1 impl, 🟡 3 stubs | ✅ agent-notify (macOS notifications) |
+| Rules | 2 | 🟢 Complete | Function safety, uv commands |
+| Skills | 3 | 🟢 All have SKILL.md | Frontend design, shell functions, testing |
+| Commands | 17 | 🟢 Complete | Design workflow: polish, audit, animate, etc. |
+| Agents | 1 | 🟢 Complete | Code reviewer with read-only tools |
+| Output Styles | 0 | 🔴 None | (see Health Check) |
+| CLAUDE.md Templates | 2 | 🟡 5 planned | ✅ Root context, behavior config, decision journal |
+```
+
+**Details column guidance:**
+- Focus on what's **complete** (green items)
+- For rows with 🟡/🔴 status, describe the working parts; pending items are listed in Health Check
+- Use "(see Health Check)" for rows that are entirely incomplete
+
+---
+
+### 3. 📁 Detailed Sections
+
+#### 3.1 Hooks
+List all files in `templates/.claude/hooks/`:
+
+| Filename | Status | Description |
+|----------|--------|-------------|
+| `file.sh` | 🟢 Implemented / 🟡 Stub | What this hook does when triggered |
+
+Example descriptions:
+- `agent-notify.sh` → "macOS notification when agent completes"
+- `post-edit-format.sh` → "Auto-format files after edits"
+- `pre-commit.sh` → "Run checks before commits"
+- `session-start.sh` → "Setup tasks when session begins"
+
+#### 3.2 Rules
+List all `.md` files in `templates/.claude/rules/`:
+
+| Filename | Description |
+|----------|-------------|
+| `rule.md` | Full description of what this rule enforces and why |
+
+Example descriptions:
+- `function-safety.md` → "Requires searching for all callers before modifying shared functions"
+- `uv-commands.md` → "Enforces using uv instead of direct python/pip commands"
+
+#### 3.3 Skills
+List folders in `templates/.claude/skills/`:
+
+| Skill | SKILL.md | Ref Docs | Description |
+|-------|----------|----------|-------------|
+| `name/` | ✅/❌ | Count | What this skill provides |
+
+Example descriptions:
+- `frontend-design/` → "Production-grade UI with anti-AI-slop guidelines"
+- `shell-functions/` → "Best practices for .zsh/.bash function development"
+- `testing-practices/` → "Python test isolation and proper uv usage"
+
+#### 3.4 Commands (Grouped by Purpose)
+
+**Design Intensity:**
+| Command | Description |
+|---------|-------------|
+| `/bolder` | Amplify safe/boring designs |
+| `/quieter` | Tone down overly bold designs |
+| `/simplify` | Strip to essence |
+| `/colorize` | Add strategic color |
+
+**Quality & Polish:**
+| Command | Description |
+|---------|-------------|
+| `/audit` | Comprehensive quality audit |
+| `/critique` | UX design critique |
+| `/polish` | Final quality pass |
+| `/optimize` | Performance optimization |
+
+**UX & Content:**
+| Command | Description |
+|---------|-------------|
+| `/clarify` | Improve unclear UX copy |
+| `/onboard` | Design onboarding flows |
+| `/delight` | Add moments of joy |
+| `/harden` | Improve resilience (i18n, errors) |
+
+**Specialized:**
+| Command | Description |
+|---------|-------------|
+| `/animate` | Add animations/micro-interactions |
+| `/adapt` | Adapt for different contexts |
+| `/extract` | Extract to design system |
+| `/normalize` | Align with design system |
+
+**Setup:**
+| Command | Description |
+|---------|-------------|
+| `/teach-impeccable` | One-time design context setup |
+
+#### 3.5 Agents
+List `.md` files in `templates/.claude/agents/`:
+
+| Agent | Model | Tools | Description |
+|-------|-------|-------|-------------|
+| `name.md` | model | tool list | What this agent does |
+
+Example:
+- `code-reviewer.md` → "Thorough code reviews with read-only tools"
+
+#### 3.6 Output Styles
+List `.md` files in `templates/.claude/output-styles/`. If folder missing or empty: "🔴 None (folder doesn't exist)"
+
+#### 3.7 CLAUDE.md Templates
+List `CLAUDE*.md` and `DECISIONS.md` in `templates/` and `templates/.claude/`:
+
+| Location | File | Type | Description |
+|----------|------|------|-------------|
+| path | filename | Base/Behavior/etc. | What this template provides |
+
+Example:
+- `templates/CLAUDE.md` → "Project context placeholder for customization"
+- `templates/DECISIONS.md` → "Decision journal with examples for memory support"
+- `templates/.claude/CLAUDE.md` → "Claude behavior config: session workflow, commit patterns"
+
+#### 3.8 Settings
+Report on `templates/.claude/settings.json` in tabular format:
+
+**Hook Events:**
+| Event | Command | Description |
+|-------|---------|-------------|
+| `Stop` | `agent-notify.sh` | Triggered when main agent completes |
+| `SubagentStop` | `agent-notify.sh` | Triggered when subagent completes |
+
+If no hooks configured: "None configured"
+
+**Permissions:**
+| Type | Entries | Description |
+|------|---------|-------------|
+| `allow` | (list or "empty") | Pre-approved tool patterns |
+| `deny` | (list or "empty") | Blocked tool patterns |
+
+**Other Settings (if present):**
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `model` | (if set) | Default model override |
+| `apiProvider` | (if set) | API provider configuration |
+| `trustTools` | (if set) | Auto-approved tools |
+
+If a setting isn't present, omit it from the table.
+
+---
+
+### 4. 🔗 Dependencies
+
+Show relationships between components:
+
+```
+🔗 **DEPENDENCIES**
+
+frontend-design skill ← used by 16 commands
+  └─ /adapt, /animate, /audit, /bolder, /clarify, /colorize,
+     /critique, /delight, /extract, /harden, /normalize,
+     /onboard, /optimize, /polish, /quieter, /simplify
+
+code-reviewer agent ← standalone (no skill dependencies)
+```
+
+---
+
+### 5. 🎯 Suggested Next Actions
+
+Based on gaps identified in Health Check, provide a prioritized action list:
+
+```
+🎯 **SUGGESTED NEXT ACTIONS**
+
+Priority:
+1. 🟡 Implement stub hooks (see Health Check for list)
+2. 🟡 Create output-styles/ folder with at least one example style
+
+When Ready:
+3. 🔴 Create planned CLAUDE.md templates (see Health Check for list)
+
+Or if everything is complete:
+✅ Templates are comprehensive! Consider:
+   • Adding more skills for other domains
+   • Creating project-type-specific commands
+   • Contributing back to the starter kit
+```
+
+**Note:** Don't repeat the detailed lists here—refer to Health Check where items are already listed with descriptions.
+
+---
+
+### 6. 📅 Last Modified (Optional)
+
+If useful, show when key files were last modified using relative dates:
+
+```
+📅 **RECENT CHANGES**
+
+| File | Modified |
+|------|----------|
+| frontend-design/SKILL.md | 2 days ago |
+| settings.json | today |
+```
+
+Use `ls -la` or `stat` to get modification times. Skip this section if not informative.
+
+---
+
+## Cross-Reference Check
+
+Compare against `README.md` and `TEMPLATE-GUIDE.md` to identify:
+- Items mentioned but not created
+- Items created but not documented
+- Inconsistencies between docs and actual files
+
+Report any discrepancies in the Health Check section.
