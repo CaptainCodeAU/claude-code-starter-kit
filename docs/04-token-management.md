@@ -119,7 +119,7 @@ Nested files are **only loaded when Claude reads files in that directory**.
 
 ### 5. Skill Metadata Matters
 
-Skill descriptions are always loaded (~20 tokens each). Make them count:
+Skill descriptions are always loaded (~100 tokens each). Make them count:
 
 ```yaml
 # Good - Clear, actionable
