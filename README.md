@@ -282,6 +282,8 @@ claude-code-starter-kit/
 └── .gitignore
 ```
 
+> **Note:** The `src/`, `tests/`, `main.py`, and `pyproject.toml` files are scaffolding for a planned CLI tool (see [Roadmap](#roadmap)). Currently placeholder code only.
+
 ---
 
 ## Token Efficiency
