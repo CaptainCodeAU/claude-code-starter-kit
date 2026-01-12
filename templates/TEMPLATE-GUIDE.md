@@ -46,11 +46,11 @@ cd ~/my-new-project && claude
 
 ### Skills
 
-| Skill | Description | Project Types |
-|-------|-------------|---------------|
-| `frontend-design/` | Create distinctive, production-grade frontend interfaces. Anti-AI-slop aesthetics. Includes 7 reference docs. | React, Vue, frontend projects |
-| `shell-functions/` | Best practices for .zsh_*, .bashrc shell function development | Shell scripts, dotfiles |
-| `testing-practices/` | Python test isolation, venv verification, uv usage | Python projects |
+| Skill | Name | Description | Project Types |
+|-------|------|-------------|---------------|
+| `frontend-design/` | `frontend-design` | Create distinctive, production-grade frontend interfaces. Anti-AI-slop aesthetics. Includes 7 reference docs. | React, Vue, frontend projects |
+| `shell-functions/` | `developing-shell-functions` | Best practices for .zsh_*, .bashrc shell function development | Shell scripts, dotfiles |
+| `testing-practices/` | `testing-python` | Python test isolation, venv verification, uv usage | Python projects |
 
 ### Documentation Skills
 
@@ -119,9 +119,23 @@ Commands are slash-invoked workflows (e.g., `/polish`, `/audit`).
 ### Skills Structure
 
 Each skill folder contains:
-- `SKILL.md` - Metadata (name, description) + instructions
-- `reference/` (optional) - Detailed reference documentation
-- `examples/` (optional) - Code examples
+- `SKILL.md` - Required: YAML frontmatter (name, description) + markdown instructions
+- `reference/` (optional) - Detailed reference documentation (loaded as needed)
+- `examples/` (optional) - Code examples (loaded as needed)
+- `scripts/` (optional) - Executable scripts (run via bash, output only enters context)
+
+**YAML frontmatter fields:**
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `name` | Yes | Max 64 chars, lowercase letters/numbers/hyphens only. Should match directory name. |
+| `description` | Yes | Max 1024 chars. Include WHAT the skill does AND WHEN to use it. |
+| `allowed-tools` | No | Limits which tools Claude can use when skill is active. |
+| `model` | No | Override model when skill is active (e.g., `claude-sonnet-4-20250514`). |
+| `context` | No | Set to `fork` to run in isolated sub-agent context. |
+| `agent` | No | Agent type when `context: fork` (e.g., `Explore`, `Plan`). |
+| `hooks` | No | Define `PreToolUse`, `PostToolUse`, `Stop` hooks scoped to this skill. |
+| `user-invocable` | No | Set `false` to hide from slash menu (Claude can still use it). |
 
 ### Frontend Design Skill
 
