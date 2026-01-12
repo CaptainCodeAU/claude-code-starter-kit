@@ -43,6 +43,8 @@ This is a collaborative relationship where both parties contribute ideas. The us
 
 Solve the "blank slate" problem. When starting a new project, don't recreate Claude Code configurations manually. Copy a ready-made `.claude/` folder, delete what you don't need, and start coding with batteries included.
 
+**Note:** The maintainer of this repo is also the primary consumer of these templates. Settings and configurations are tailored for their cross-platform setup (macOS, WSL2, Linux) using UV for Python and pnpm for Node.js.
+
 ## Architecture
 
 **Single master folder approach** - One `.claude/` folder contains everything for all project types. No duplication.
