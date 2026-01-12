@@ -33,11 +33,8 @@ Start with an attention-grabbing health summary. Check for:
 
 ✅ All skills have SKILL.md files
 ✅ Settings configured with 2 hook events
-
-⚠️ 3 stub hooks need implementation
-   • post-edit-format.sh — Auto-format files after edits
-   • pre-commit.sh — Run checks before commits
-   • session-start.sh — Setup tasks when session begins
+✅ All hooks implemented (agent-notify, post-edit-format, pre-commit, session-start)
+✅ 4 rules configured (function-safety, uv-commands, nvm-commands, docker-commands)
 
 ⚠️ 5 planned CLAUDE.md templates not created
    • CLAUDE-python-cli.md — Python CLI tools (Typer, Rich, pytest)
@@ -63,9 +60,9 @@ Provide a compact summary with counts, status indicators, and helpful context:
 
 | Component | Count | Status | Details |
 |-----------|-------|--------|---------|
-| Hooks | 4 | 🟢 1 impl, 🟡 3 stubs | ✅ agent-notify (macOS notifications) |
-| Rules | 2 | 🟢 Complete | Function safety, uv commands |
-| Skills | 3 | 🟢 All have SKILL.md | Frontend design, shell functions, testing |
+| Hooks | 4 | 🟢 All implemented | agent-notify, post-edit-format, pre-commit, session-start |
+| Rules | 4 | 🟢 Complete | function-safety, uv-commands, nvm-commands, docker-commands |
+| Skills | 4 | 🟢 All have SKILL.md | frontend-design, shell-functions, testing-python, testing-javascript |
 | Commands | 17 | 🟢 Complete | Design workflow: polish, audit, animate, etc. |
 | Agents | 1 | 🟢 Complete | Code reviewer with read-only tools |
 | Output Styles | 0 | 🔴 None | (see Health Check) |
@@ -104,6 +101,8 @@ List all `.md` files in `templates/.claude/rules/`:
 Example descriptions:
 - `function-safety.md` → "Requires searching for all callers before modifying shared functions"
 - `uv-commands.md` → "Enforces using uv instead of direct python/pip commands"
+- `nvm-commands.md` → "Enforces nvm for Node version management and pnpm instead of npm"
+- `docker-commands.md` → "Common Docker patterns for dev environments (postgres, qdrant, etc.)"
 
 #### 3.3 Skills
 List folders in `templates/.claude/skills/`:
@@ -114,8 +113,9 @@ List folders in `templates/.claude/skills/`:
 
 Example descriptions:
 - `frontend-design/` → "Production-grade UI with anti-AI-slop guidelines"
-- `shell-functions/` → "Best practices for .zsh/.bash function development"
+- `shell-functions/` → "Best practices for .zsh/.bash function development, UV/NVM patterns"
 - `testing-practices/` → "Python test isolation and proper uv usage"
+- `testing-javascript/` → "JavaScript/TypeScript testing with Jest and Vitest"
 
 #### 3.4 Commands (Grouped by Purpose)
 

@@ -103,8 +103,9 @@ Use the frontend-design skill to create a login form
 | Skill | When to use |
 |-------|-------------|
 | `frontend-design` | Building UI components, pages, web apps |
-| `shell-functions` | Writing .zshrc/.bashrc functions |
+| `shell-functions` | Writing .zshrc/.bashrc functions, UV/NVM patterns |
 | `testing-python` | Python test isolation and best practices |
+| `testing-javascript` | Jest/Vitest testing, React testing-library |
 
 **See all skills:** Check `.claude/skills/`
 
@@ -126,8 +127,10 @@ Modify the helper function in utils.py
 |------|------------------|
 | `function-safety.md` | Search for callers before modifying shared functions |
 | `uv-commands.md` | Use `uv run python` instead of `python` directly |
+| `nvm-commands.md` | Use `nvm`/`pnpm` instead of `npm` directly |
+| `docker-commands.md` | Common Docker patterns for dev environments |
 
-**Note:** Delete `uv-commands.md` if you're not using uv for Python.
+**Note:** Delete rules you don't need (e.g., `uv-commands.md` if not using Python, `nvm-commands.md` if not using Node.js).
 
 ---
 
@@ -176,17 +179,23 @@ your-project/
     ├── CLAUDE.md          # Claude behavior (HOW Claude works)
     ├── settings.json      # Hooks and permissions
     ├── hooks/             # Scripts that run on events
-    │   └── agent-notify.sh
+    │   ├── agent-notify.sh
+    │   ├── post-edit-format.sh
+    │   ├── pre-commit.sh
+    │   └── session-start.sh
     ├── skills/            # Detailed instruction sets
     │   ├── frontend-design/
     │   ├── shell-functions/
-    │   └── testing-practices/
+    │   ├── testing-practices/
+    │   └── testing-javascript/
     ├── commands/          # Slash commands (/polish, /audit, etc.)
     ├── agents/            # Specialized assistants
     │   └── code-reviewer.md
     └── rules/             # Always-on constraints
         ├── function-safety.md
-        └── uv-commands.md
+        ├── uv-commands.md
+        ├── nvm-commands.md
+        └── docker-commands.md
 ```
 
 ### Token costs
@@ -204,6 +213,8 @@ your-project/
 
 - **Not doing frontend?** Delete `skills/frontend-design/` and the frontend commands
 - **Not using Python?** Delete `skills/testing-practices/` and `rules/uv-commands.md`
+- **Not using Node.js?** Delete `skills/testing-javascript/` and `rules/nvm-commands.md`
+- **Not using Docker?** Delete `rules/docker-commands.md`
 - **Not on macOS?** Delete or modify `hooks/agent-notify.sh`
 - **Not writing shell scripts?** Delete `skills/shell-functions/`
 
