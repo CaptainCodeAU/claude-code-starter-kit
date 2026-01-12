@@ -1,6 +1,6 @@
 ---
-name: "Python Testing Practices"
-description: "Test isolation, venv verification, and proper uv command usage for Python testing"
+name: testing-python
+description: Test isolation, venv verification, and proper uv command usage for Python testing. Use when writing, running, or debugging Python tests.
 ---
 
 # Python Testing Best Practices

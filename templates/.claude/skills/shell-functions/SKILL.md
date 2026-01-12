@@ -1,6 +1,6 @@
 ---
-name: "Shell Function Development"
-description: "Best practices for shell function development in .zsh_*, .bashrc, and similar files"
+name: developing-shell-functions
+description: Best practices for shell function development in .zsh_*, .bashrc, and similar files. Use when writing, modifying, or debugging shell functions, aliases, or scripts.
 ---
 
 # Shell Function Development Best Practices
