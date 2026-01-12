@@ -33,6 +33,12 @@ This is a collaborative relationship where both parties contribute ideas. The us
 - **Provide context proactively** - Don't assume the user remembers previous sessions
 - **Append to DECISIONS.md** - Log is at the bottom, always append new entries there
 
+## Session Workflow
+
+- **Commit after completing tasks**: After finishing significant changes, offer to commit. Group related changes into logical commits with descriptive messages. Always ask before committing - never auto-commit.
+- **Ask before large changes**: Before refactoring or making widespread modifications, explain the plan and get confirmation.
+- **End sessions cleanly**: Before ending a session with significant work, ensure changes are committed and progress is documented.
+
 ## Purpose
 
 Solve the "blank slate" problem. When starting a new project, don't recreate Claude Code configurations manually. Copy a ready-made `.claude/` folder, delete what you don't need, and start coding with batteries included.
@@ -51,25 +57,27 @@ Solve the "blank slate" problem. When starting a new project, don't recreate Cla
 
 ```
 templates/
+├── CLAUDE.md                  # Root template (project context)
+├── DECISIONS.md               # Decision journal template
 ├── TEMPLATE-GUIDE.md          # What to keep/delete per project type
+├── GETTING-STARTED.md         # Hands-on feature tour
 └── .claude/
-    ├── CLAUDE.md              # Minimal fallback template
+    ├── CLAUDE.md              # Behavior template (Claude workflow)
     ├── settings.json          # Universal - smart hooks
     ├── hooks/                 # Universal - auto-detect language
     ├── skills/                # Delete unused per project
     ├── commands/              # Slash commands (e.g., /polish, /audit)
     ├── agents/                # Custom subagents (delete unused)
-    ├── output-styles/         # Custom output styles (optional)
     └── rules/                 # Delete unused per project
 ```
 
 **Note:** Project-type-specific CLAUDE.md templates (CLAUDE-python-cli.md, CLAUDE-react.md, etc.) are planned but not yet created.
 
-## Workflow
+## Template Usage
 
-1. Copy `templates/.claude/` to new project
+1. Copy `templates/CLAUDE.md`, `templates/DECISIONS.md`, and `templates/.claude/` to new project
 2. Consult `TEMPLATE-GUIDE.md` for your project type
-3. Customize `CLAUDE.md` for your project (or use a type-specific template when available)
+3. Customize root `CLAUDE.md` (project context) and `.claude/CLAUDE.md` (behavior)
 4. Delete unused skills/ folders
 5. Delete unused commands/ (if not using frontend-design commands)
 6. Delete unused rules/ (if any)

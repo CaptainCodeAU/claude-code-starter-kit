@@ -9,28 +9,41 @@ Quick reference for setting up your `.claude/` folder. Find your project type, s
 ## Quick Start
 
 ```bash
-# 1. Copy the .claude folder to your new project
+# 1. Copy everything to your new project
+cp /path/to/claude-code-starter-kit/templates/CLAUDE.md ~/my-new-project/
+cp /path/to/claude-code-starter-kit/templates/DECISIONS.md ~/my-new-project/
 cp -r /path/to/claude-code-starter-kit/templates/.claude ~/my-new-project/
 
-# 2. Copy the getting started guide (optional but recommended)
-cp /path/to/claude-code-starter-kit/templates/GETTING-STARTED.md ~/my-new-project/.claude/
+# 2. (Optional) Copy the getting started guide
+cp /path/to/claude-code-starter-kit/templates/GETTING-STARTED.md ~/my-new-project/
 
-# 3. Navigate into it
-cd ~/my-new-project/.claude
+# 3. Customize CLAUDE.md files (see Step 1 below)
 
-# 4. Follow the sections below to customize for your project type
-
-# 5. Start Claude Code
+# 4. Start Claude Code
 cd ~/my-new-project && claude
 ```
 
 ---
 
-## Step 1: Choose Your CLAUDE.md
+## Step 1: Customize Your CLAUDE.md Files
 
-| Project Type | Use This File | Then Delete |
-|--------------|---------------|-------------|
-| *(Add project types as templates are created)* | | |
+You have TWO CLAUDE.md files - both are loaded every session:
+
+| File | Purpose | What to customize |
+|------|---------|-------------------|
+| `CLAUDE.md` (root) | Project context | Stack, commands, structure, conventions |
+| `.claude/CLAUDE.md` | Claude behavior | Workflow preferences, working style |
+
+**Root CLAUDE.md** - Tell Claude WHAT your project is:
+- Fill in your tech stack
+- Add your dev/test/build commands
+- Describe project structure
+- List coding conventions
+
+**.claude/CLAUDE.md** - Tell Claude HOW to work:
+- Keep or modify workflow preferences
+- Add your working style preferences
+- Review configured tools table
 
 ---
 

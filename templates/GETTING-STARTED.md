@@ -1,21 +1,28 @@
 # Getting Started with Your .claude/ Folder
 
-You've copied the `.claude/` folder into your project. Here's a hands-on tour of everything you now have access to.
+You've copied the `CLAUDE.md`, `DECISIONS.md`, and `.claude/` folder into your project. Here's a hands-on tour of everything you now have access to.
 
 **Time to complete:** 15-20 minutes
 
 ---
 
-## Step 1: Customize Your CLAUDE.md
+## Step 1: Customize Your CLAUDE.md Files
 
-**What:** The `.claude/CLAUDE.md` file tells Claude about your project.
+**What:** You have TWO CLAUDE.md files that Claude reads every session:
+
+| File | Purpose |
+|------|---------|
+| `CLAUDE.md` (root) | Project context - WHAT your project is |
+| `.claude/CLAUDE.md` | Claude behavior - HOW Claude should work |
 
 **Do this:**
-1. Open `.claude/CLAUDE.md`
-2. Replace the placeholder text with your actual project info
-3. Delete the tips section at the bottom when done
+1. Open `CLAUDE.md` (root) - fill in your stack, commands, structure
+2. Open `.claude/CLAUDE.md` - review the behavior settings (critical thinking partner, memory awareness, session workflow)
+3. Delete the template instruction comments when done
 
-**Why it matters:** Claude reads this file at the start of every session. Better context = better assistance.
+**Why it matters:** Root file gives Claude project context. The `.claude/` file ensures Claude works the way you need (commits after tasks, reads DECISIONS.md, documents everything).
+
+**Also:** You have `DECISIONS.md` for tracking decisions, rejections, and experiments. Claude will read this at the start of each session.
 
 ---
 
@@ -159,24 +166,27 @@ Restart Claude Code to see it in action.
 
 ## Quick Reference
 
-### What's in your .claude/ folder
+### What you copied to your project
 
 ```
-.claude/
-├── CLAUDE.md           # Project context (customize this!)
-├── settings.json       # Hooks and permissions
-├── hooks/              # Scripts that run on events
-│   └── agent-notify.sh # Notification when tasks complete
-├── skills/             # Detailed instruction sets
-│   ├── frontend-design/
-│   ├── shell-functions/
-│   └── testing-practices/
-├── commands/           # Slash commands (/polish, /audit, etc.)
-├── agents/             # Specialized assistants
-│   └── code-reviewer.md
-└── rules/              # Always-on constraints
-    ├── function-safety.md
-    └── uv-commands.md
+your-project/
+├── CLAUDE.md              # Project context (WHAT your project is)
+├── DECISIONS.md           # Decision journal (tracks choices, rejections, experiments)
+└── .claude/
+    ├── CLAUDE.md          # Claude behavior (HOW Claude works)
+    ├── settings.json      # Hooks and permissions
+    ├── hooks/             # Scripts that run on events
+    │   └── agent-notify.sh
+    ├── skills/            # Detailed instruction sets
+    │   ├── frontend-design/
+    │   ├── shell-functions/
+    │   └── testing-practices/
+    ├── commands/          # Slash commands (/polish, /audit, etc.)
+    ├── agents/            # Specialized assistants
+    │   └── code-reviewer.md
+    └── rules/             # Always-on constraints
+        ├── function-safety.md
+        └── uv-commands.md
 ```
 
 ### Token costs
